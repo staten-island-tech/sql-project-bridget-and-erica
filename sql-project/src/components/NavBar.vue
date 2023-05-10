@@ -1,6 +1,6 @@
 <template>
     <nav class="navTab">
-        <router-link to="/"></router-link>
+        <router-link to="/">home</router-link>
     </nav>
 </template>
   
