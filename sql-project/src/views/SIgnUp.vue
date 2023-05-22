@@ -1,17 +1,19 @@
 <template>
     <div class="container">
         <h1>Create Account</h1>
-        <div class="inputs">
-            <label for="email">Email:</label>
-            <input type="email" id="email" v-model="email">
-            <label for="password">Password:</label>
-            <input type="password" id="password" v-model="password">
-        </div>
-        <p class="message">{{ message }}</p>
-        <div class="buttons">
-            <button @click="create">Sign Up</button>
-            <p>Already have an account? Login here!</p>
-            <router-link class="login" to="/LogIn">Login</router-link>
+        <div class="form">
+            <div class="inputs">
+				<input type="email" id="email" placeholder="Email" v-model="email" />
+				<input type="password" id="password" placeholder="Password" v-model="password" />
+            </div>
+            <p class="message">{{ message }}</p>
+            <div class="buttons">
+                <button @click="create">Sign Up</button>
+            </div>
+            <div class="login">
+				<p>Already have an account? Login </p>
+				<router-link class="loginLink" to="/LogIn">here!</router-link>
+			</div>
         </div>
     </div>
 </template>
@@ -38,6 +40,7 @@ async function create() {
         });
         if (error) {
             console.error(error);
+            message.value= error;
         } else {
             console.log(user);
             message.value = "Sign-up successful!";
@@ -53,27 +56,38 @@ async function create() {
 </script>
   
 <style scoped>
-h1 {
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 4rem;
-    font-weight: 700;
-    color: #020102;
-    text-align: center;
-}
-
 .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
-button,
-.login {
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+h1 {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #020102;
+    margin-bottom: 1.5rem;
+}
+
+.buttons {
+    margin-top: 1rem;
+}
+
+button {
     cursor: pointer;
     font-weight: 700;
     font-family: 'Noto Sans', sans-serif;
-    transition: all .2s;
+    transition: all 0.2s;
     padding: 8px 20px;
     border-radius: 100px;
     background: var(--yellow);
@@ -89,13 +103,25 @@ button:active {
     transform: scale(0.95);
 }
 
+.login {
+    margin-top: 1rem;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.login p {
+    margin-bottom: 0.5rem;
+}
+
+.loginLink {
+    color: #020102;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
 .inputs {
     font-family: 'Noto Sans', sans-serif;
     display: flex;
     flex-direction: column;
-    width: fit-content;
-    margin: 0.8rem;
-    background-color: #f6f4f4;
 }
 
 .inputs input {
@@ -103,10 +129,10 @@ button:active {
     padding: 10px 12px;
     font-size: 1.2rem;
     border-radius: 5px;
+    margin-top: 1rem;
 }
 
 .inputs input:focus {
     outline: none;
 }
 </style>
-  

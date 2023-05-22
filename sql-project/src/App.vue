@@ -1,8 +1,6 @@
 <template>
-  <div class="navBar">
     <NavBar />
     <RouterView />
-  </div>
 </template>
 
 <script setup>
@@ -11,6 +9,10 @@ import { RouterView } from 'vue-router';
 </script>
 
 <style scoped>
+body{
+  display: flex;
+  flex-direction: column;
+}
 h1 {
   font-size: 4rem;
 }

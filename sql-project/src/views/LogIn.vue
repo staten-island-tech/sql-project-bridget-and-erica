@@ -1,21 +1,23 @@
 <template>
 	<div class="container">
 		<h1>Login</h1>
-		<div class="inputs">
-			<label for="email">Email:</label>
-			<input type="email" id="email" v-model="email">
-			<label for="password">Password:</label>
-			<input type="password" id="password" v-model="password">
-		</div>
-		<p class="message">{{ message }}</p>
-		<div class="buttons">
-			<button @click="login">Login</button>
-			<p>Don't have an account yet? Create one here!</p>
-			<router-link class="createAccount" to="/SignUp">Create Account</router-link>
+		<div class="form">
+			<div class="inputs">
+				<input type="email" id="email" placeholder="Email" v-model="email" />
+				<input type="password" id="password" placeholder="Password" v-model="password" />
+			</div>
+			<p class="message">{{ message }}</p>
+			<div class="buttons">
+				<button @click="login">Login</button>
+			</div>
+			<div class="createAccount">
+				<p>Don't have an account yet? Create one</p>
+				<router-link class="createAccountLink" to="/SignUp">here!</router-link>
+			</div>
 		</div>
 	</div>
 </template>
-	
+  
 <script setup>
 import { RouterLink } from "vue-router";
 import { ref } from "vue";
@@ -49,29 +51,40 @@ async function login() {
 	}
 }
 </script>
-	
+  
 <style scoped>
-h1 {
-	font-family: 'Nunito Sans', sans-serif;
-	font-size: 4rem;
-	font-weight: 700;
-	color: #020102;
-	text-align: center;
-}
-
 .container {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
 }
 
-button,
-.createAccount {
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 1rem;
+}
+
+h1 {
+	font-family: 'Nunito Sans', sans-serif;
+	font-size: 2.5rem;
+	font-weight: 700;
+	color: #020102;
+	margin-bottom: 1.5rem;
+}
+
+.buttons {
+	margin-top: 1rem;
+}
+
+button {
 	cursor: pointer;
 	font-weight: 700;
 	font-family: 'Noto Sans', sans-serif;
-	transition: all .2s;
+	transition: all 0.2s;
 	padding: 8px 20px;
 	border-radius: 100px;
 	background: var(--yellow);
@@ -87,13 +100,25 @@ button:active {
 	transform: scale(0.95);
 }
 
+.createAccount {
+	margin-top: 1rem;
+	font-family: 'Noto Sans', sans-serif;
+}
+
+.createAccount p {
+	margin-bottom: 0.5rem;
+}
+
+.createAccountLink {
+	color: #020102;
+	font-weight: 700;
+	text-decoration: underline;
+}
+
 .inputs {
 	font-family: 'Noto Sans', sans-serif;
 	display: flex;
 	flex-direction: column;
-	width: fit-content;
-	margin: 0.8rem;
-	background-color: #f6f4f4;
 }
 
 .inputs input {
@@ -101,10 +126,10 @@ button:active {
 	padding: 10px 12px;
 	font-size: 1.2rem;
 	border-radius: 5px;
+	margin-top: 1rem;
 }
 
 .inputs input:focus {
 	outline: none;
 }
 </style>
-  
