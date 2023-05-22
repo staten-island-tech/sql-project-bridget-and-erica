@@ -41,6 +41,8 @@ async function create() {
         } else {
             console.log(user);
             message.value = "Sign-up successful!";
+            email.value = "";
+            password.value = "";
         }
     } catch (err) {
         message.value = "Error signing up";
