@@ -1,6 +1,8 @@
 <template>
   <main>
-    <h1>home page :)</h1>
+    <div class="sideMenu">
+      <SideMenu />
+    </div>
     <ProductCard v-for="product in products" :product="product" :key="product.id" />
   </main>
 </template>
@@ -9,6 +11,7 @@
 import { ref, onMounted } from 'vue';
 import { supabase } from "../clients/supabase";
 import ProductCard from '../components/ProductCard.vue';
+import SideMenu from '../components/SideMenu.vue';
 
 const products = ref([]);
 
@@ -22,3 +25,4 @@ onMounted(() => {
   getProducts();
 });
 </script>
+
