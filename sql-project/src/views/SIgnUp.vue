@@ -3,22 +3,22 @@
         <h1>Create Account</h1>
         <div class="form">
             <div class="inputs">
-				<input type="email" id="email" placeholder="Email" v-model="email" />
-				<input type="password" id="password" placeholder="Password" v-model="password" />
+                <input type="email" id="email" placeholder="Email" v-model="email" />
+                <input type="password" id="password" placeholder="Password" v-model="password" />
             </div>
             <p class="message">{{ message }}</p>
             <div class="buttons">
                 <button @click="create">Sign Up</button>
             </div>
             <div class="login">
-				<p>Already have an account? Login </p>
-				<router-link class="loginLink" to="/LogIn">here!</router-link>
-			</div>
+                <p>Already have an account? Login </p>
+                <router-link class="loginLink" to="/LogIn">here!</router-link>
+            </div>
         </div>
     </div>
 </template>
   
-<script setup>
+<script >
 import { RouterLink } from "vue-router";
 import { ref } from "vue";
 import { supabase } from "../clients/supabase";
@@ -40,7 +40,7 @@ async function create() {
         });
         if (error) {
             console.error(error);
-            message.value= error;
+            message.value = error;
         } else {
             console.log(user);
             message.value = "Sign-up successful!";

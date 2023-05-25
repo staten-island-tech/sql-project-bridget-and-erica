@@ -1,7 +1,6 @@
 <template>
     <div class="productCard">
         <h3>{{ product.name }}</h3>
-        <p class="productType">{{ product.type }}</p>
         <p>{{ usDollar.format(product.price) }}</p>
     </div>
 </template>
@@ -12,9 +11,6 @@ export default {
     name: "ProductCard",
     props: {
         product: Object,
-    },
-    components: {
-        AddButton
     },
     data() {
         return {
