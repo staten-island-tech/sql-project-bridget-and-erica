@@ -2,6 +2,7 @@
     <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/LogIn">Login</RouterLink>
+        <router-link alt="shopping-cart" to="/"><img src="/shopping-cart.svg" width="25" height="25" /></router-link>
     </nav>
 </template>
   
