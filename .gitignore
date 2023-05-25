@@ -1,0 +1,12 @@
+
+*.cmd
+node_modules/.bin/node-gyp-build
+*.node
+*.ps1
+*.ts
+*.map
+*.js
+*.json
+*.md
+node_modules/@supabase/functions-js/LICENSE
+node_modules/@supabase/postgrest-js/LICENSE

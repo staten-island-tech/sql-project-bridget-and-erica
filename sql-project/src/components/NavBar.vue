@@ -1,13 +1,13 @@
 <template>
-        <nav>
-            <RouterLink to="/">Home</RouterLink>
-            <RouterLink to="/LogIn">Login</RouterLink>
-        </nav>
+    <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/LogIn">Login</RouterLink>
+    </nav>
 </template>
   
 <style scoped>
 nav {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     letter-spacing: 0.1rem;
     display: flex;
     flex-direction: row;
@@ -19,13 +19,14 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
-    z-index:1;
+    z-index: 1;
     background-color: white;
 }
 
 nav a {
     font-size: 1.2rem;
     display: flex;
+    color: #FBBA7D;
     justify-content: center;
     padding: 0 1rem;
     margin: 0.5rem;
@@ -39,11 +40,12 @@ nav a:first-of-type {
 }
 
 nav a.router-link-active {
-    opacity: 60%;
+    text-decoration: #FBBA7D underline;
 }
 
 nav a.router-link-exact-active:hover {
-    background-color: transparent;
+    text-decoration: #FBBA7D underline;
+    transition: all 1s ease;
 }
 
 nav a:hover {
