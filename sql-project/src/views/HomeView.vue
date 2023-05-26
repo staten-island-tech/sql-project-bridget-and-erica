@@ -7,7 +7,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { supabase } from "../clients/supabase";
+import { createClient } from '@supabase/supabase-js'
 import ProductCard from '../components/ProductCard.vue';
 
 const products = ref([]);
