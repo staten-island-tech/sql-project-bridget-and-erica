@@ -1,14 +1,17 @@
 <template>
   <main>
-    <h1>home page :)</h1>
+    <div class="sideMenu">
+      <SideMenu />
+    </div>
     <ProductCard v-for="product in products" :product="product" :key="product.id" />
   </main>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { createClient } from '@supabase/supabase-js'
+import { supabase } from "../clients/supabase";
 import ProductCard from '../components/ProductCard.vue';
+import SideMenu from '../components/SideMenu.vue';
 
 const products = ref([]);
 
