@@ -2,10 +2,28 @@
     <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/LogIn">Login</RouterLink>
-        <router-link alt="shopping-cart" to="/"><img src="/shopping-cart.svg" width="25" height="25" /></router-link>
+        <div class="shoppingCart" @click="showCart">
+            <img src="/shopping-cart.svg" width="25" height="25" />
+        </div>
     </nav>
 </template>
-  
+
+<script>
+export default {
+    name: "shoppingCart",
+    data() {
+        return {
+            showCart: false
+        }
+    },
+    methods: {
+        showDetails() {
+            this.showCart = true
+        }
+    }
+};
+</script>
+
 <style scoped>
 nav {
     font-family: 'Open Sans', sans-serif;
