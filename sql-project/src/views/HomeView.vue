@@ -1,54 +1,55 @@
 <template>
   <main>
-    <div class="homeView">
-      <div class="shingles">
-        <img src="/shingles.svg" height="233" width="1957" alt="">
-      </div>
-      <div class="groceries">
-        <h1 class="groceryText">
-          groceries :)
-        </h1>
-      </div>
-      <div class="homeContent">
+    <section class="homeView">
+      <section class="titleDecor">
+        <div class="shingles">
+          <img src="/shingles.svg" class="imgShingles" />
+        </div>
+        <div class="groceries">
+          <h1 class="groceryText">groceries :)</h1>
+        </div>
+      </section>
+
+      <section class="homeContent">
         <div class="sideMenu">
           <SideMenu />
         </div>
         <div class="productCards">
           <ProductCard v-for="product in products" :product="product" :key="product.id" />
         </div>
-      </div>
-
-    </div>
-
-
+      </section>
+    </section>
   </main>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { supabase } from "../clients/supabase";
-import ProductCard from '../components/ProductCard.vue';
-import SideMenu from '../components/SideMenu.vue';
+import { ref, onBeforeMount } from 'vue'
+import { supabase } from '../clients/supabase'
+import ProductCard from '../components/ProductCard.vue'
+import SideMenu from '../components/SideMenu.vue'
 
-const products = ref([]);
+const products = ref([])
 
 async function getProducts() {
-  const { data } = await supabase.from('products').select();
-  products.value = data;
-  console.log(products.value);
+  const { data } = await supabase.from('products').select()
+  products.value = data
 }
 
-onMounted(() => {
-  getProducts();
-});
+onBeforeMount(() => {
+  getProducts()
+})
 </script>
 
 <style>
+main {
+  width: 100vw;
+}
 .homeView {
   display: flex;
   flex-direction: column;
   width: 100vw;
   overflow: hidden;
+  align-items: center;
 }
 
 .shingles {
@@ -58,7 +59,23 @@ onMounted(() => {
 
 .homeContent {
   display: flex;
+  width: 100%;
   flex-direction: row;
+  justify-content: space-around;
+  padding: 3rem 5rem;
+}
+
+.groceries {
+  width: 798px;
+  height: 304px;
+  border: 10px #fbba7d solid;
+  border-radius: 55%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4rem;
+
+  background-color: #fffcf2;
 }
 
 .groceryText {
@@ -67,11 +84,28 @@ onMounted(() => {
   font-weight: 700;
   font-size: 64px;
   line-height: 78px;
-  border: 10px  #FBBA7D solid;
-  border-radius: 55% ;
+
   text-align: center;
-  width: 798px;
-height: 304px;
-  color:  #FBBA7D;
+
+  color: #fbba7d;
+}
+
+.productCards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.titleDecor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+
+  background-color: #ffeccc;
+}
+
+.imgShingles {
+  overflow: hidden;
 }
 </style>
