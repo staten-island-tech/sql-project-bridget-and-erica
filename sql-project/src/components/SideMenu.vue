@@ -36,7 +36,7 @@ h2 {
 }
 
 hr {
-  width: 10%;
+  width: 5rem;
   height: 2px;
   background: #000;
   margin: 0.3rem 0 0.3rem 0;

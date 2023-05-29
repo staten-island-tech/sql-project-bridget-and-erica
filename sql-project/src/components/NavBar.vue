@@ -1,54 +1,48 @@
 <template>
-<<<<<<< HEAD
-    <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/LogIn">Login</RouterLink>
-        <div class="toggleCart">
-            <img src="/shopping-cart.svg" width="25" height="25" @click="toggleCart" />
-            <CartDetails v-show="openCart" />
-        </div>
-    </nav>
+  <nav>
+    <div class="left">
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/LogIn">Login</RouterLink>
+    </div>
+    <div class="right">
+      <div class="toggleCart">
+        <img src="/shopping-cart.svg" width="25" height="25" @click="toggleCart" />
+      </div>
+    </div>
+  </nav>
+  <div class="cartDetails">
+    <CartDetails v-show="openCart" />
+  </div>
 </template>
 
 <script>
 import CartDetails from './CartDetails.vue';
 
 export default {
-    name: "NavBar",
-    components: {
-        CartDetails, 
+  name: "NavBar",
+  components: {
+    CartDetails,
+  },
+  data() {
+    return {
+      openCart: false,
+    };
+  },
+  methods: {
+    toggleCart() {
+      this.openCart = !this.openCart;
     },
-    data() {
-        return {
-            openCart: false,
-        };
-    },
-    methods: {
-        toggleCart() {
-            this.openCart = !this.openCart;
-        },
-    },
+  },
 };
 </script>
 
-=======
-  <nav>
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/LogIn">Login</RouterLink>
-    <router-link alt="shopping-cart" to="/"
-      ><img src="/shopping-cart.svg" width="25" height="25"
-    /></router-link>
-  </nav>
-</template>
-
->>>>>>> e06659da7495b345743ac693ab584187fce9a4bb
 <style scoped>
 nav {
   font-family: 'Open Sans', sans-serif;
   letter-spacing: 0.1rem;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   text-align: center;
@@ -88,5 +82,20 @@ nav a.router-link-exact-active:hover {
 nav a:hover {
   opacity: 60%;
   transition: all 1s ease;
+}
+
+.cartDetails {
+  z-index: 1;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
 }
 </style>

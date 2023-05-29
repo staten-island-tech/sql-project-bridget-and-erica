@@ -61,7 +61,6 @@ main {
   display: flex;
   width: 100%;
   flex-direction: row;
-  justify-content: space-around;
   padding: 3rem 5rem;
 }
 
@@ -107,5 +106,10 @@ main {
 
 .imgShingles {
   overflow: hidden;
+}
+
+.sideMenu{
+  width: 20%;
+  margin-top: 0.8rem;
 }
 </style>
