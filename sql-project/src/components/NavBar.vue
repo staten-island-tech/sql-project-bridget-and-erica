@@ -2,10 +2,34 @@
     <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/LogIn">Login</RouterLink>
-        <router-link alt="shopping-cart" to="/"><img src="/shopping-cart.svg" width="25" height="25" /></router-link>
+        <div class="toggleCart">
+            <img src="/shopping-cart.svg" width="25" height="25" @click="toggleCart" />
+            <CartDetails v-show="openCart" />
+        </div>
     </nav>
 </template>
-  
+
+<script>
+import CartDetails from './CartDetails.vue';
+
+export default {
+    name: "NavBar",
+    components: {
+        CartDetails, 
+    },
+    data() {
+        return {
+            openCart: false,
+        };
+    },
+    methods: {
+        toggleCart() {
+            this.openCart = !this.openCart;
+        },
+    },
+};
+</script>
+
 <style scoped>
 nav {
     font-family: 'Open Sans', sans-serif;
