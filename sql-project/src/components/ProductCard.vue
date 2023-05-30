@@ -4,7 +4,8 @@
     <p>{{ product.category_id }}</p>
     <p>{{ usDollar.format(product.price) }}</p>
     <div class="button">
-      <AddButton />
+      <!-- when button clicked, add product object to cart -->
+      <AddButton @add-click="addToCart"/>
     </div>
   </div>
 </template>
@@ -25,7 +26,13 @@ export default {
       })
     }
   },
-  components: { AddButton }
+  components: { AddButton },
+  methods: {
+    addToCart() {
+      // add product object to cart
+      this.$emit('addToCart', this.product)
+    }
+  }
 }
 </script>
 

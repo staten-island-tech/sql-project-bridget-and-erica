@@ -15,7 +15,7 @@
           <SideMenu />
         </div>
         <div class="productCards">
-          <ProductCard v-for="product in products" :product="product" :key="product.id" />
+          <ProductCard v-for="product in products" :product="product" :key="product.id" @addToCart="addToCart"/>
         </div>
       </section>
     </section>
@@ -28,11 +28,20 @@ import { supabase } from '../clients/supabase'
 import ProductCard from '../components/ProductCard.vue'
 import SideMenu from '../components/SideMenu.vue'
 
+//import stores
+import { useCartStore } from '../stores/cart.js'
+
+const store = useCartStore()
 const products = ref([])
 
 async function getProducts() {
   const { data } = await supabase.from('products').select()
   products.value = data
+}
+
+// when AddButton is clicked -> ProductCard emits product -> product pushed to store's cart
+function addToCart(product) {
+  store.cart.push(product)
 }
 
 onBeforeMount(() => {

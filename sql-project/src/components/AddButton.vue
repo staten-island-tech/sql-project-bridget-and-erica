@@ -1,13 +1,11 @@
 <template>
-  <button>Add to Cart</button>
+  <!-- tell ProductCard when button clicked -->
+  <button @click="$emit('add-click')">Add to Cart</button>
 </template>
 
 <script>
 export default {
   name: 'AddButton',
-  props: {
-    product: Object
-  }
 }
 </script>
 
