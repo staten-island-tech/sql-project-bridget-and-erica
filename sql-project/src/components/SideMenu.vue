@@ -52,6 +52,12 @@ button {
   margin: 0.2rem 0 0.2rem 0;
   background: transparent;
   border: none;
+
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #d5d5d5;
 }
 
 .sort {

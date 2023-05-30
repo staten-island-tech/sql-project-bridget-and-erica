@@ -72,6 +72,8 @@ li {
     background-color: #ffeccc;
     border-radius: 10px;
     border: 2px solid black;
+
+    overflow: auto;
 }
 
 button {
@@ -85,6 +87,8 @@ button {
     width: 7rem;
     height: 2.3125rem;
     border: none;
+
+    cursor: pointer;
 }
 
 .buttons {

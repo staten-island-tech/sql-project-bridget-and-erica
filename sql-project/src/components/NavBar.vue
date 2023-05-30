@@ -98,4 +98,8 @@ nav a:hover {
   align-items: center;
   padding: 0 2rem;
 }
+
+.toggleCart {
+  cursor: pointer;
+}
 </style>
