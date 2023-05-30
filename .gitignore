@@ -5,7 +5,6 @@ node_modules/.bin/node-gyp-build
 *.ps1
 *.ts
 *.map
-*.js
 *.json
 *.md
 .env
