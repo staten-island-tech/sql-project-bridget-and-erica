@@ -8,7 +8,7 @@
       </div>
       <p class="message">{{ message }}</p>
       <div class="buttons">
-        <button @click="create">Sign Up</button>
+        <button @click="create()">Sign Up</button>
       </div>
       <div class="login">
         <p>Already have an account? Login</p>
@@ -18,7 +18,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
 import { supabase } from '../clients/supabase'

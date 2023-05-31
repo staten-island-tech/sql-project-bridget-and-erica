@@ -31,7 +31,6 @@ async function login() {
   try {
     if (!email.value || !password.value) {
       message.value = 'Please provide both your email and password.'
-      return
     }
     const { user, error } = await supabase.auth.signInWithPassword({
       email: email.value,
