@@ -10,5 +10,5 @@ export const useCartStore = defineStore('cart', () => {
     cart.value = []
   }
 
-  return {cart, $reset}
+  return { cart, $reset }
 })

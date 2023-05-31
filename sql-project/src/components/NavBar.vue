@@ -16,24 +16,24 @@
 </template>
 
 <script>
-import CartDetails from './CartDetails.vue';
+import CartDetails from './CartDetails.vue'
 
 export default {
-  name: "NavBar",
+  name: 'NavBar',
   components: {
-    CartDetails,
+    CartDetails
   },
   data() {
     return {
-      openCart: false,
-    };
+      openCart: false
+    }
   },
   methods: {
     toggleCart() {
-      this.openCart = !this.openCart;
-    },
-  },
-};
+      this.openCart = !this.openCart
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -15,7 +15,12 @@
           <SideMenu />
         </div>
         <div class="productCards">
-          <ProductCard v-for="product in products" :product="product" :key="product.id" @addToCart="addToCart"/>
+          <ProductCard
+            v-for="product in productsStore.product"
+            :product="product"
+            :key="product.id"
+            @addToCart="addToCart"
+          />
         </div>
       </section>
     </section>
@@ -23,28 +28,30 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue'
+import { onMounted } from 'vue'
 import { supabase } from '../clients/supabase'
 import ProductCard from '../components/ProductCard.vue'
 import SideMenu from '../components/SideMenu.vue'
 
 //import stores
 import { useCartStore } from '../stores/cart.js'
+import { useProductStore } from '../stores/product'
 
-const store = useCartStore()
-const products = ref([])
+const cartStore = useCartStore()
+const productsStore = useProductStore()
 
 async function getProducts() {
   const { data } = await supabase.from('products').select()
-  products.value = data
+  productsStore.product = data
+  console.log(productsStore.product)
 }
 
 // when AddButton is clicked -> ProductCard emits product -> product pushed to store's cart
 function addToCart(product) {
-  store.cart.push(product)
+  cartStore.cart.push(product)
 }
 
-onBeforeMount(() => {
+onMounted(() => {
   getProducts()
 })
 </script>
@@ -117,7 +124,7 @@ main {
   overflow: hidden;
 }
 
-.sideMenu{
+.sideMenu {
   width: 20%;
   margin-top: 0.8rem;
 }
