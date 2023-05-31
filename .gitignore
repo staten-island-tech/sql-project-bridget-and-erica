@@ -10,3 +10,4 @@ node_modules/.bin/node-gyp-build
 .env
 node_modules/@supabase/functions-js/LICENSE
 node_modules/@supabase/postgrest-js/LICENSE
+node_modules/

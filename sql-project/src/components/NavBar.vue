@@ -77,6 +77,22 @@ nav a:hover {
   transition: all 1s ease;
 }
 
+button {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  text-align: center;
+  background: #fbba7d;
+  border-radius: 81px;
+  width: 5rem;
+  border: none;
+  padding: 0.5rem;
+  margin-right: 1rem;
+
+  cursor: pointer;
+}
+
 .cartDetails {
   z-index: 1;
 }
