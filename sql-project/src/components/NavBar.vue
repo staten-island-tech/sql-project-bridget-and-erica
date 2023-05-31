@@ -1,38 +1,31 @@
 <template>
-  <nav>
-    <div class="left">
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/LogIn">Login</RouterLink>
-    </div>
-    <div class="right">
-      <div class="toggleCart">
-        <img src="/shopping-cart.svg" width="25" height="25" @click="toggleCart" />
+    <nav>
+      <div class="left">
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/LogIn">Login</RouterLink>
       </div>
+      <div class="right">
+        <div class="logOut">
+          <button v-if="loggedStore.logged" @click="loggedStore.logOut">Sign Out</button>
+        </div>
+        <div class="toggleCart">
+          <img src="/shopping-cart.svg" width="25" height="25" @click="toggleCart()" />
+        </div>
+      </div>
+    </nav>
+    <div class="cartDetails">
+      <CartDetails v-show="openCart" />
     </div>
-  </nav>
-  <div class="cartDetails">
-    <CartDetails v-show="openCart" />
-  </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
 import CartDetails from './CartDetails.vue'
-
-export default {
-  name: 'NavBar',
-  components: {
-    CartDetails
-  },
-  data() {
-    return {
-      openCart: false
-    }
-  },
-  methods: {
-    toggleCart() {
-      this.openCart = !this.openCart
-    }
-  }
+import { useLoggedStore } from '../stores/logged';
+const loggedStore = useLoggedStore()
+let openCart = ref(false)
+function toggleCart() {
+  openCart.value = !openCart.value
 }
 </script>
 

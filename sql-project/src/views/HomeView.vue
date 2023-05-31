@@ -32,25 +32,23 @@ import { onMounted } from 'vue'
 import { supabase } from '../clients/supabase'
 import ProductCard from '../components/ProductCard.vue'
 import SideMenu from '../components/SideMenu.vue'
-
 //import stores
 import { useCartStore } from '../stores/cart.js'
 import { useProductStore } from '../stores/product'
-
 const cartStore = useCartStore()
 const productsStore = useProductStore()
-
 async function getProducts() {
   const { data } = await supabase.from('products').select()
   productsStore.product = data
-  console.log(productsStore.product)
 }
-
 // when AddButton is clicked -> ProductCard emits product -> product pushed to store's cart
 function addToCart(product) {
   cartStore.cart.push(product)
 }
-
+function logIn() {
+  loggedStore.logged = true
+  console.log(loggedStore.logged)
+}
 onMounted(() => {
   getProducts()
 })

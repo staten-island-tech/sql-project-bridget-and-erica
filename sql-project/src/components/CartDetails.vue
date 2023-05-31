@@ -14,15 +14,21 @@
       </li>
     </div>
     <div class="buttons">
-      <button>Checkout</button>
+      <button v-if="logged">Checkout</button>
       <button @click="store.$reset">Clear Cart</button>
     </div>
+    <router-link v-if="!logged" to="/LogIn">Login to Save</router-link>
   </div>
 </template>
 
 <script setup>
 // import stores
 import { useCartStore } from '../stores/cart'
+import { useLoggedStore } from '../stores/logged'
+import { storeToRefs } from 'pinia'
+
+const loggedStore = useLoggedStore()
+const { logged } = storeToRefs(loggedStore)
 const store = useCartStore()
 
 // function that takes each item in the cart and adds the prices, only to 2 decimals
@@ -57,7 +63,8 @@ function getUniqueItems() {
 <style scoped>
 h2,
 p,
-li {
+li,
+a {
   font-family: 'Open Sans', sans-serif;
   margin: 5px 0;
 }
@@ -73,7 +80,6 @@ li {
   background-color: #ffeccc;
   border-radius: 10px;
   border: 2px solid black;
-
   overflow: auto;
 }
 
@@ -88,7 +94,7 @@ button {
   width: 7rem;
   height: 2.3125rem;
   border: none;
-
+  text-decoration: none;
   cursor: pointer;
 }
 
@@ -96,5 +102,10 @@ button {
   display: flex;
   justify-content: space-around;
   margin-top: 1rem;
+}
+
+a {
+  text-decoration: underline;
+  color: black;
 }
 </style>
