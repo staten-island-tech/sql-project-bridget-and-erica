@@ -12,10 +12,10 @@
       <li v-for="item in getUniqueItems()" :key="item.id">{{ itemQuantity(item) }} {{ item.name }} </li>
     </div>
     <div class="buttons">
-      <RouterLink to="/CheckoutView">Checkout</RouterLink>
+      <router-link v-if="logged" to="/CheckoutView">Checkout</router-link>
       <button @click="store.$reset">Clear Cart</button>
     </div>
-
+    <router-link v-if="!logged" to="/LogIn">Login to Checkout</router-link>
   </div>
 </template>
 
