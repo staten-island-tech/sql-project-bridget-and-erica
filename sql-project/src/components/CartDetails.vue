@@ -9,15 +9,13 @@
     </div>
     <div class="items">
       <!-- display each unique item, with its amount and name -->
-      <li v-for="item in getUniqueItems()" :key="item.id">
-        {{ itemQuantity(item) }} {{ item.name }}
-      </li>
+      <li v-for="item in getUniqueItems()" :key="item.id">{{ itemQuantity(item) }} {{ item.name }} </li>
     </div>
     <div class="buttons">
-      <button v-if="logged">Checkout</button>
+      <RouterLink to="/CheckoutView">Checkout</RouterLink>
       <button @click="store.$reset">Clear Cart</button>
     </div>
-    <router-link v-if="!logged" to="/LogIn">Login to Save</router-link>
+
   </div>
 </template>
 
