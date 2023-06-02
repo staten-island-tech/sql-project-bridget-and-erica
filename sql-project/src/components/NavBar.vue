@@ -1,39 +1,32 @@
 <template>
-  <nav>
-    <div class="left">
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/LogIn">Login</RouterLink>
-    </div>
-    <div class="right">
-      <div class="toggleCart">
-        <img src="/shopping-cart.svg" width="25" height="25" @click="toggleCart" />
+    <nav>
+      <div class="left">
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/LogIn">Login</RouterLink>
       </div>
+      <div class="right">
+        <div class="logOut">
+          <button v-if="loggedStore.logged" @click="loggedStore.logOut">Sign Out</button>
+        </div>
+        <div class="toggleCart">
+          <img src="/shopping-cart.svg" width="25" height="25" @click="toggleCart()" />
+        </div>
+      </div>
+    </nav>
+    <div class="cartDetails">
+      <CartDetails v-show="openCart" />
     </div>
-  </nav>
-  <div class="cartDetails">
-    <CartDetails v-show="openCart" />
-  </div>
 </template>
 
-<script>
-import CartDetails from './CartDetails.vue';
-
-export default {
-  name: "NavBar",
-  components: {
-    CartDetails,
-  },
-  data() {
-    return {
-      openCart: false,
-    };
-  },
-  methods: {
-    toggleCart() {
-      this.openCart = !this.openCart;
-    },
-  },
-};
+<script setup>
+import { ref } from 'vue'
+import CartDetails from './CartDetails.vue'
+import { useLoggedStore } from '../stores/logged';
+const loggedStore = useLoggedStore()
+let openCart = ref(false)
+function toggleCart() {
+  openCart.value = !openCart.value
+}
 </script>
 
 <style scoped>
@@ -84,6 +77,22 @@ nav a:hover {
   transition: all 1s ease;
 }
 
+button {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  text-align: center;
+  background: #fbba7d;
+  border-radius: 81px;
+  width: 5rem;
+  border: none;
+  padding: 0.5rem;
+  margin-right: 1rem;
+
+  cursor: pointer;
+}
+
 .cartDetails {
   z-index: 1;
 }
@@ -97,5 +106,9 @@ nav a:hover {
   display: flex;
   align-items: center;
   padding: 0 2rem;
+}
+
+.toggleCart {
+  cursor: pointer;
 }
 </style>

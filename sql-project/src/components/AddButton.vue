@@ -5,13 +5,14 @@
 
 <script>
 export default {
-  name: 'AddButton',
+  name: 'AddButton'
 }
 </script>
 
 <style scoped>
 button:hover {
   transform: scale(1.04);
+  transition: all ease-in-out 0.1s;
 }
 
 button {
@@ -25,5 +26,13 @@ button {
   width: 9rem;
   height: 2.3125rem;
   border: none;
+
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(1);
+  transition: all ease-in-out 0.1s;
+  cursor: initial;
 }
 </style>

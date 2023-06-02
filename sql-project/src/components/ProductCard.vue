@@ -5,7 +5,7 @@
     <p>{{ usDollar.format(product.price) }}</p>
     <div class="button">
       <!-- when button clicked, add product object to cart -->
-      <AddButton @add-click="addToCart"/>
+      <AddButton @add-click="addToCart" />
     </div>
   </div>
 </template>

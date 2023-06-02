@@ -17,11 +17,17 @@
     </div>
   </div>
 </template>
-
+  
 <script setup>
-import { RouterLink } from 'vue-router'
-import { ref } from 'vue'
-import { supabase } from '../clients/supabase'
+import { RouterLink } from "vue-router";
+import { ref } from "vue";
+import { supabase } from "../clients/supabase";
+
+import { useLoggedStore } from '../stores/logged'
+import { storeToRefs } from 'pinia'
+
+const loggedStore = useLoggedStore()
+const {logged} = storeToRefs(loggedStore)
 
 let email = ref('')
 let password = ref('')
@@ -38,19 +44,22 @@ async function login() {
     })
     if (error) {
       console.error(error)
+      message.value = 'Error logging in.'
     } else {
       console.log(user)
       message.value = 'Login successful!'
       email.value = ''
       password.value = ''
+
+      loggedStore.logged = true
     }
   } catch (err) {
-    message.value = 'Error logging in'
+    message.value = 'Error logging in.'
     console.log(err)
   }
 }
 </script>
-
+  
 <style scoped>
 .container {
   display: flex;
