@@ -3,7 +3,6 @@
     <h2>Your Cart</h2>
     <hr />
     <div class="total">
-      <hr />
       <!-- display calculated total price -->
       <p>Total: ${{ totalPrice() }}</p>
     </div>
@@ -12,11 +11,13 @@
       <li v-for="item in getUniqueItems()" :key="item.id">{{ itemQuantity(item) }} {{ item.name }} </li>
     </div>
     <div class="buttons">
-      <router-link v-if="logged" to="/CheckoutView">Checkout</router-link>
+      <router-link class="checkout" v-if="logged" to="/CheckoutView">Checkout</router-link>
       <button @click="store.$reset">Clear Cart</button>
     </div>
-    <router-link v-if="!logged" to="/LogIn">Login to Checkout</router-link>
-  </div>
+    <div class="login">
+      <router-link v-if="!logged" to="/LogIn">Login to Checkout</router-link>
+    </div>
+    </div>
 </template>
 
 <script setup>
@@ -67,6 +68,30 @@ a {
   margin: 5px 0;
 }
 
+.checkout {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  text-align: center;
+  background: #fbba7d;
+  border-radius: 81px;
+  width: 7rem;
+  height: 2.3125rem;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login {
+  margin-top: 1rem;
+  text-align: center;
+}
+
 .main {
   width: 20rem;
   height: 30rem;
@@ -82,6 +107,7 @@ a {
 }
 
 button {
+  margin-top: 0.4rem;
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   font-weight: 400;
