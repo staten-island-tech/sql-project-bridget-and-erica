@@ -16,7 +16,7 @@
         </div>
         <div class="productCards">
           <ProductCard
-            v-for="product in productsStore.product"
+            v-for="product in productsStore.filtered"
             :product="product"
             :key="product.id"
             @addToCart="addToCart"
@@ -32,24 +32,37 @@ import { onMounted } from 'vue'
 import { supabase } from '../clients/supabase'
 import ProductCard from '../components/ProductCard.vue'
 import SideMenu from '../components/SideMenu.vue'
+
 //import stores
 import { useCartStore } from '../stores/cart.js'
 import { useProductStore } from '../stores/product'
 const cartStore = useCartStore()
 const productsStore = useProductStore()
-async function getProducts() {
-  const { data } = await supabase.from('products').select()
-  productsStore.product = data
+
+async function getProducts() { 
+  const { data } = await supabase.from('products').select() //API call to the 'products' table on Supabase
+  productsStore.product = data 
+  getCategories() //pull the categories so the product card shows the proper cateogory 
+  productsStore.filtered = productsStore.product //the filtered products are simply all the data/products, since no sorting or filtering is required upon loading
 }
+
 // when AddButton is clicked -> ProductCard emits product -> product pushed to store's cart
 function addToCart(product) {
   cartStore.cart.push(product)
 }
-function logIn() {
-  loggedStore.logged = true
-  console.log(loggedStore.logged)
+
+async function getCategories() {
+  const { data } = await supabase.from('categories').select() //API call to the 'categories' table on Supabase
+  data.forEach((categories) => { //for each of the data in the table, if the product category_id matches the category id, then the category_id is replaced with the category's name in the product card
+    productsStore.product.forEach((product) => {
+      if (product.category_id == categories.id) {
+        product.category_id = categories.name
+      }
+    })
+  })
 }
-onMounted(() => {
+
+onMounted(() => { //upon the page loading, take all the products and display them 
   getProducts()
 })
 </script>
