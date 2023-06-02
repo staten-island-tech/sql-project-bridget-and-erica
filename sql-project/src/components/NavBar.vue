@@ -6,6 +6,7 @@
       </div>
       <div class="right">
         <div class="logOut">
+                <!-- this referral to login will only show if the logged state is false (user is not logged in) -->
           <button v-if="loggedStore.logged" @click="loggedStore.logOut">Sign Out</button>
         </div>
         <div class="toggleCart">

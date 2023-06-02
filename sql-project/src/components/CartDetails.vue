@@ -11,10 +11,12 @@
       <li v-for="item in getUniqueItems()" :key="item.id">{{ itemQuantity(item) }} {{ item.name }} </li>
     </div>
     <div class="buttons">
+      <!-- user will only be able to checkout if they are logged in -->
       <router-link class="checkout" v-if="logged" to="/CheckoutView">Checkout</router-link>
       <button @click="store.$reset">Clear Cart</button>
     </div>
     <div class="login">
+      <!-- this referral to login will only show if the logged state is false (user is not logged in) -->
       <router-link v-if="!logged" to="/LogIn">Login to Checkout</router-link>
     </div>
     </div>
