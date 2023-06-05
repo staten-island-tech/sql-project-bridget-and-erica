@@ -12,18 +12,19 @@
     </div>
     <div class="buttons">
       <!-- user will only be able to checkout if they are logged in -->
-      <router-link class="checkout" v-if="logged" to="/CheckoutView">Checkout</router-link>
+      <router-link class="checkout" v-if="logged" to="/CheckoutView" @click="sendCart()">Checkout</router-link>
       <button @click="store.$reset">Clear Cart</button>
     </div>
     <div class="login">
       <!-- this referral to login will only show if the logged state is false (user is not logged in) -->
       <router-link v-if="!logged" to="/LogIn">Login to Checkout</router-link>
     </div>
-    </div>
+  </div>
 </template>
 
 <script setup>
 // import stores
+import { supabase } from '../clients/supabase';
 import { useCartStore } from '../stores/cart'
 import { useLoggedStore } from '../stores/logged'
 import { storeToRefs } from 'pinia'
@@ -58,6 +59,19 @@ function getUniqueItems() {
   })
 
   return uniqueItems
+}
+
+async function sendCart() {
+  const { data: { user } } = await supabase.auth.getUser()
+  const uuid = user.id
+  if (store.cart.length != 0) {
+    const { error } = await supabase
+      .from('customers')
+      .insert([{ user_id: uuid, cart: store.cart }])
+      console.log( error )
+  } else {
+    alert('Nothing in cart')
+  }
 }
 </script>
 
