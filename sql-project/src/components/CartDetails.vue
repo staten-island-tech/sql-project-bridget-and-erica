@@ -8,12 +8,12 @@
     </div>
     <div class="items">
       <!-- display each unique item, with its amount and name -->
-      <li v-for="item in getUniqueItems()" :key="item.id">{{ itemQuantity(item) }} {{ item.name }} </li>
+      <div class="item" v-for="item in getUniqueItems()" :key="item.id">{{ itemQuantity(item) }} {{ item.name }} <button @click="increment(item)">+</button> <button @click="decrement(item)">-</button></div>
     </div>
     <div class="buttons">
       <!-- user will only be able to checkout if they are logged in -->
       <router-link class="checkout" v-if="logged" to="/CheckoutView" @click="sendCart()">Checkout</router-link>
-      <button @click="store.$reset">Clear Cart</button>
+      <button class="clearCart" @click="store.$reset">Clear Cart</button>
     </div>
     <div class="login">
       <!-- this referral to login will only show if the logged state is false (user is not logged in) -->
@@ -46,6 +46,19 @@ function itemQuantity(item) {
   return quantity
 }
 
+// adds the item to the cart again
+function increment(item) {
+  store.cart.push(item)
+}
+
+// finds if the item is in the cart, if it is, get rid of it
+function decrement(item) {
+  const index = store.cart.findIndex((cartItem) => cartItem.id === item.id);
+  if (index !== -1) {
+    store.cart.splice(index, 1);
+  }
+}
+
 // function that checks when you add an item, if it's id is unique; if not, add the id and name to their arrays; returns unique items (so that cart wont display every item in cart)
 function getUniqueItems() {
   const uniqueItems = []
@@ -68,7 +81,7 @@ async function sendCart() {
     const { error } = await supabase
       .from('customers')
       .insert([{ user_id: uuid, cart: store.cart }])
-      console.log( error )
+    console.log(error)
   } else {
     alert('Nothing in cart')
   }
@@ -82,6 +95,11 @@ li,
 a {
   font-family: 'Open Sans', sans-serif;
   margin: 5px 0;
+}
+
+.item {
+  display: flex;
+  margin-bottom: 10px;
 }
 
 .checkout {
@@ -122,7 +140,7 @@ a {
   overflow: auto;
 }
 
-button {
+.clearCart {
   margin-top: 0.4rem;
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
