@@ -3,6 +3,7 @@
       <div class="left">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/LogIn">Login</RouterLink>
+        <RouterLink to="/Orders">Orders</RouterLink>
       </div>
       <div class="right">
         <div class="logOut">

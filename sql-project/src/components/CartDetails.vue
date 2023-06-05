@@ -79,8 +79,8 @@ async function sendCart() {
   const uuid = user.id
   if (store.cart.length != 0) {
     const { error } = await supabase
-      .from('customers')
-      .insert([{ user_id: uuid, cart: store.cart }])
+      .from('orders')
+      .insert([{ user_id: uuid, cart: store.cart, order_total: totalPrice() }])
     console.log(error)
   } else {
     alert('Nothing in cart')
