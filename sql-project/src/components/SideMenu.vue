@@ -20,39 +20,45 @@
 </template>
 
 <script setup>
-import { useProductStore } from '../stores/product';
+import { useProductStore } from '../stores/product'
 
 const productsStore = useProductStore()
 
-async function filter(selection) { //this function filters the items!! (what a descriptive function amiright)
+async function filter(selection) {
+  //this function filters the items!! (what a descriptive function amiright)
   if (selection == 'All') {
     productsStore.filtered = productsStore.product //if the selection is all, then the filtered products are simply all the products
-  } else { //otherwise, we most on to filtering the items based on the categories
+  } else {
+    //otherwise, we most on to filtering the items based on the categories
     //if the product's category_id matches the value of the selection, then it will be considered a filtered product
     //category_id uses foregin keys!! (references the 'categories' table)
-    const filteredProducts = productsStore.product.filter((product) => product.category_id == selection)
+    const filteredProducts = productsStore.product.filter(
+      (product) => product.category_id == selection
+    )
     productsStore.filtered = filteredProducts
   }
   console.log(productsStore.filtered)
 }
 
 function sort(selection) {
-  if (selection == 'All') { //if the sorting is 'All', then the products will return as usual
+  if (selection == 'All') {
+    //if the sorting is 'All', then the products will return as usual
     productsStore.filtered = productsStore.product
-  } else
-    if (selection == 'LowtoHigh') {
-      const sortedProducts = [] //array to house sorted products
-      productsStore.product.forEach((product) => sortedProducts.push(product)) //push each product into the 'sortedProducts' array 
-      //*not pushing it into this array would modify the original array, which is not desirable
-      sortedProducts.sort((a, b) => { //within the 'sortedProducts' array, sort the products from low to high 
-        return a.price - b.price
-      })
-      productsStore.filtered = sortedProducts //the filtered products are the products in the array, with respect to their order
-    }
+  } else if (selection == 'LowtoHigh') {
+    const sortedProducts = [] //array to house sorted products
+    productsStore.product.forEach((product) => sortedProducts.push(product)) //push each product into the 'sortedProducts' array
+    //*not pushing it into this array would modify the original array, which is not desirable
+    sortedProducts.sort((a, b) => {
+      //within the 'sortedProducts' array, sort the products from low to high
+      return a.price - b.price
+    })
+    productsStore.filtered = sortedProducts //the filtered products are the products in the array, with respect to their order
+  }
   if (selection == 'HightoLow') {
     const sortedProducts = [] //array to house sorted products
     productsStore.product.forEach((product) => sortedProducts.push(product))
-    sortedProducts.sort((a, b) => { //within the 'sortedProducts' array, sort the products from high to low
+    sortedProducts.sort((a, b) => {
+      //within the 'sortedProducts' array, sort the products from high to low
       return b.price - a.price
     })
     productsStore.filtered = sortedProducts //the filtered products are the products in the array, with respect to their order

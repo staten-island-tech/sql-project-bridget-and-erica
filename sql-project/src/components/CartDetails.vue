@@ -8,11 +8,22 @@
     </div>
     <div class="items">
       <!-- display each unique item, with its amount and name -->
-      <div class="item" v-for="item in getUniqueItems()" :key="item.id">{{ itemQuantity(item) }} {{ item.name }} <button @click="increment(item)">+</button> <button @click="decrement(item)">-</button></div>
+      <div class="item" v-for="item in getUniqueItems()" :key="item.id">
+        {{ itemQuantity(item) }} {{ item.name }} <button @click="increment(item)">+</button>
+        <button @click="decrement(item)">-</button>
+      </div>
     </div>
     <div class="buttons">
       <!-- user will only be able to checkout if they are logged in -->
-      <router-link class="checkout" v-if="logged" to="/CheckoutView" @click="sendCart()">Checkout</router-link>
+      <router-link
+        class="checkout"
+        v-if="logged"
+        to="/Orders"
+        @click="sendCart(); ordersStore.toggleOrders()"
+      >
+      <!-- if logged in: on click, send cart to supabase and to store, make sure orders can be seen, and go to orders page -->
+      Checkout
+      </router-link>
       <button class="clearCart" @click="store.$reset">Clear Cart</button>
     </div>
     <div class="login">
@@ -24,14 +35,16 @@
 
 <script setup>
 // import stores
-import { supabase } from '../clients/supabase';
+import { supabase } from '../clients/supabase'
 import { useCartStore } from '../stores/cart'
 import { useLoggedStore } from '../stores/logged'
 import { storeToRefs } from 'pinia'
+import { useOrdersStore } from '../stores/orders'
 
 const loggedStore = useLoggedStore()
 const { logged } = storeToRefs(loggedStore)
 const store = useCartStore()
+const ordersStore = useOrdersStore()
 
 // function that takes each item in the cart and adds the prices, only to 2 decimals
 function totalPrice() {
@@ -53,9 +66,9 @@ function increment(item) {
 
 // finds if the item is in the cart, if it is, get rid of it
 function decrement(item) {
-  const index = store.cart.findIndex((cartItem) => cartItem.id === item.id);
+  const index = store.cart.findIndex((cartItem) => cartItem.id === item.id)
   if (index !== -1) {
-    store.cart.splice(index, 1);
+    store.cart.splice(index, 1)
   }
 }
 
@@ -75,7 +88,9 @@ function getUniqueItems() {
 }
 
 async function sendCart() {
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user }
+  } = await supabase.auth.getUser()
   const uuid = user.id
   if (store.cart.length != 0) {
     const { error } = await supabase

@@ -11,4 +11,6 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   return { cart, $reset }
-})
+},
+{persist: true}
+)

@@ -1,21 +1,17 @@
 <template>
   <div class="inputs">
     <div class="name">
-      <input type="text" placeholder="Insert Name">
+      <input type="text" placeholder="Insert Name" />
     </div>
     <div class="DOB">
-      <input type="date" placeholder="Insert Name">
+      <input type="date" placeholder="Insert Name" />
     </div>
   </div>
-  <div class="process">
-
-  </div>
+  <div class="process"></div>
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
 
 <style scoped>
@@ -32,4 +28,5 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
-}</style>
+}
+</style>

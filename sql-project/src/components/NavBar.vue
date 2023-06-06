@@ -1,33 +1,41 @@
 <template>
-    <nav>
-      <div class="left">
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/LogIn">Login</RouterLink>
-        <RouterLink to="/Orders">Orders</RouterLink>
-      </div>
-      <div class="right">
-        <div class="logOut">
-                <!-- this referral to login will only show if the logged state is false (user is not logged in) -->
-          <button v-if="loggedStore.logged" @click="loggedStore.logOut">Sign Out</button>
-        </div>
-        <div class="toggleCart">
-          <img src="/shopping-cart.svg" width="25" height="25" @click="toggleCart()" />
-        </div>
-      </div>
-    </nav>
-    <div class="cartDetails">
-      <CartDetails v-show="openCart" />
+  <nav>
+    <div class="left">
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/LogIn">Login</RouterLink>
+
+      <!-- display if showOrders is true (when logged in/checked out and orders.length > 0) -->
+      <RouterLink to="/Orders" v-if="ordersStore.showOrders">Orders</RouterLink>
     </div>
+    <div class="right">
+      <div class="logOut">
+        <!-- this referral to login will only show if the logged state is false (user is not logged in); on click, log out and reset user's carts and go back to home -->
+        <button v-if="loggedStore.logged" @click="loggedStore.logOut(); ordersStore.reset(); ordersStore.toggleOrders()" to="/">Sign Out</button>
+      </div>
+      <div class="toggleCart">
+        <img src="/shopping-cart.svg" width="25" height="25" @click="toggleCart()" />
+      </div>
+    </div>
+  </nav>
+  <div class="cartDetails">
+    <CartDetails v-show="openCart" />
+  </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import CartDetails from './CartDetails.vue'
-import { useLoggedStore } from '../stores/logged';
+import { useLoggedStore } from '../stores/logged'
+import { useOrdersStore } from '../stores/orders'
+
 const loggedStore = useLoggedStore()
+const ordersStore = useOrdersStore()
+
 let openCart = ref(false)
+
 function toggleCart() {
   openCart.value = !openCart.value
+  console.log(ordersStore.showOrders)
 }
 </script>
 

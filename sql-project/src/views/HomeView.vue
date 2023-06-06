@@ -39,10 +39,10 @@ import { useProductStore } from '../stores/product'
 const cartStore = useCartStore()
 const productsStore = useProductStore()
 
-async function getProducts() { 
+async function getProducts() {
   const { data } = await supabase.from('products').select() //API call to the 'products' table on Supabase
-  productsStore.product = data 
-  getCategories() //pull the categories so the product card shows the proper cateogory 
+  productsStore.product = data
+  getCategories() //pull the categories so the product card shows the proper cateogory
   productsStore.filtered = productsStore.product //the filtered products are simply all the data/products, since no sorting or filtering is required upon loading
 }
 
@@ -53,7 +53,8 @@ function addToCart(product) {
 
 async function getCategories() {
   const { data } = await supabase.from('categories').select() //API call to the 'categories' table on Supabase
-  data.forEach((categories) => { //for each of the data in the table, if the product category_id matches the category id, then the category_id is replaced with the category's name in the product card
+  data.forEach((categories) => {
+    //for each of the data in the table, if the product category_id matches the category id, then the category_id is replaced with the category's name in the product card
     productsStore.product.forEach((product) => {
       if (product.category_id == categories.id) {
         product.category_id = categories.name
@@ -62,7 +63,8 @@ async function getCategories() {
   })
 }
 
-onMounted(() => { //upon the page loading, take all the products and display them 
+onMounted(() => {
+  //upon the page loading, take all the products and display them
   getProducts()
 })
 </script>
