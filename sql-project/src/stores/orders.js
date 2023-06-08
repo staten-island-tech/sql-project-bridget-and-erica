@@ -21,7 +21,7 @@ export const useOrdersStore = defineStore('orders', () => {
     } else {
       showOrders.value = false
     }
-    console.log(showOrders.value)
+    console.log("orders value:", showOrders.value)
   }
 
   async function getCarts() {

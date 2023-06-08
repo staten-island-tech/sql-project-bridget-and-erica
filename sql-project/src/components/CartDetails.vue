@@ -46,6 +46,7 @@ const { logged } = storeToRefs(loggedStore)
 const store = useCartStore()
 const ordersStore = useOrdersStore()
 
+
 // function that takes each item in the cart and adds the prices, only to 2 decimals
 function totalPrice() {
   let price = 0

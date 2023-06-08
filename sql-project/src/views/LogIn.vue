@@ -28,9 +28,11 @@ import { useLoggedStore } from '../stores/logged'
 import { storeToRefs } from 'pinia'
 
 import { useOrdersStore } from '../stores/orders'
+import { useAuthStore } from '../stores/authStore'
 
 const ordersStore = useOrdersStore()
 const loggedStore = useLoggedStore()
+const authStore = useAuthStore()
 const { logged } = storeToRefs(loggedStore)
 
 let email = ref('')
@@ -53,7 +55,6 @@ async function login() {
       message.value = 'Login successful!'
       email.value = ''
       password.value = ''
-
       loggedStore.logged = true
     }
   } catch (err) {

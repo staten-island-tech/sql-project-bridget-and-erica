@@ -1,14 +1,7 @@
 <template>
-  <div class="orders">
-    <!-- create a div for every order in user's carts -->
-    <div class="order" v-for="order in carts" :key="order.id">
-      <!-- show unique order_id -->
-      <p>{{ order.order_id }}</p>
-      <!-- create a p tag for every item in its respective cart (will display quantity and name) -->
-      <p v-for="item in cartInterpreter(order.cart)">{{ item }}</p>
-      <!-- update cart's processed status -->
-      <button @click="pay(order.order_id)">Purchase</button>
-    </div>
+<OrderCard />
+  <div class="purchased">
+    <h2>Purchased Carts</h2>
   </div>
 </template>
 
@@ -16,6 +9,7 @@
 import { onMounted, ref } from 'vue'
 import { supabase } from '../clients/supabase'
 import { useOrdersStore } from '../stores/orders.js'
+import OrderCard from '../components/OrderCard.vue';
 
 let ordersStore = useOrdersStore()
 let carts = ref([])
