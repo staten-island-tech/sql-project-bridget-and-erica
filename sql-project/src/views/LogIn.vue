@@ -9,7 +9,7 @@
       <p class="message">{{ message }}</p>
       <div class="buttons">
         <!-- when logging in, show orders link -->
-        <button @click="login()">Login</button>
+        <button @click="loginAndCheck()">Login</button>
       </div>
       <div class="createAccount">
         <p>Don't have an account yet? Create one</p>
@@ -21,13 +21,14 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
+import { useRouter } from 'vue-router';
 import { ref } from 'vue'
 import { supabase } from '../clients/supabase'
 
 import { useLoggedStore } from '../stores/logged'
 import { useCartStore } from '../stores/cart';
 const cartStore = useCartStore()
-
+const router = useRouter()
 const loggedStore = useLoggedStore()
 
 let email = ref('')
@@ -44,18 +45,25 @@ async function login() {
       password: password.value
     })
     if (error) {
-      console.error(error)
+      console.error(user, error)
       message.value = 'Error logging in.'
     } else {
       message.value = 'Login successful!'
       email.value = ''
       password.value = ''
       loggedStore.logged = true
+      router.push('/');
     }
   } catch (err) {
     message.value = 'Error logging in.'
     console.log(err)
   }
+}
+
+async function loginAndCheck() {
+  await login();
+  await cartStore.getCarts()
+  cartStore.toggleOrders();
 }
 </script>
 
@@ -94,8 +102,8 @@ button {
   transition: all 0.2s;
   padding: 8px 20px;
   border-radius: 100px;
-  background: var(--yellow);
-  border: 1px solid transparent;
+  background: #fbba7d;
+  border: 1px solid black;
   display: flex;
   align-items: center;
   font-size: 16px;

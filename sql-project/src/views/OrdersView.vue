@@ -13,39 +13,18 @@ import OrderCard from '../components/OrderCard.vue';
 
 let ordersStore = useOrdersStore()
 let carts = ref([])
+let purchased = ref([])
 
-carts.value = ordersStore.carts
-
-// function to get user's uuid and get every cart that they have ordered
-
-function cartInterpreter(cart) {
-  // arrays for unique items and ids
-  const uniqueItems = []
-  const uniqueItemIds = []
-
-  // for each item in the cart, get the quantity of the item and if the item is unique, push the id to ids and push the quantity and name to unique items
-  cart.forEach((item) => {
-    let quantity = cart.filter((cartItem) => cartItem.id == item.id).length
-    if (uniqueItemIds.includes(item.id) == false) {
-      uniqueItemIds.push(item.id)
-      uniqueItems.push(`${quantity} ${item.name}`)
-    }
-  })
-  // return unique items
-  return uniqueItems
-}
-
-// function to update processed status of cart
-async function pay(order_id) {
-  const { data } = await supabase
-    .from('orders')
-    .update({ processed: true })
-    .eq('order_id', order_id)
+async function getPurchased() {
+  let { data: orders, error } = await supabase.from('orders').select('*').eq('processed', true)
+  purchased.value.push(orders)
+  console.log(purchased.value)
 }
 
 // when orders view is mounted, get carts
 onMounted(async () => {
-  
+  carts.value = ordersStore.carts
+  getPurchased()
 })
 </script>
 
@@ -55,12 +34,37 @@ onMounted(async () => {
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
 .order {
   border: 1px black solid;
   padding: 1rem;
 
   display: flex;
   flex-direction: column;
-  width: 20vw;
+  width: 30vw;
+  height: 20vh;
+}
+
+li {
+  font-size: 16px;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.cart {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  height: 80%;
+
+}
+
+.processed {
+  text-align: center;
 }
 </style>

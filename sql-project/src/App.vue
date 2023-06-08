@@ -10,6 +10,8 @@ import { supabase } from './clients/supabase';
 import { onMounted } from 'vue';
 
 import { useLoggedStore } from './stores/logged';
+import { useCartStore } from './stores/cart';
+const cartStore = useCartStore()
 
 // function that checks the auth session, if null session, logged false in the store
 async function checkSession() {
@@ -17,11 +19,17 @@ async function checkSession() {
   if (data.session == null) {
     useLoggedStore().logged = false
   }
-  console.log(data)
+  if (error !== null) {
+    console.log(error)
+  }
 }
 
-onMounted(() => {
-  checkSession()
+onMounted(async () => {
+  await checkSession()
+  cartStore.toggleOrders()
+  if (useLoggedStore().logged == true) {
+    cartStore.getCarts()
+  }
 })
 
 </script>

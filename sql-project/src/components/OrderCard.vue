@@ -5,7 +5,7 @@
             <!-- show unique order_id -->
             <p>Your Order ID: {{ order.order_id }}</p>
             <!-- create a p tag for every item in its respective cart (will display quantity and name) -->
-            <p v-for="item in cartInterpreter(order.cart)">{{ item }}</p>
+            <p v-for="item in cartInterpreter(order.cart)" :key="item.id">{{ item }}</p>
             <!-- update cart's processed status -->
             <button @click="pay(order.order_id)">Purchase</button>
         </div>
@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { supabase } from '../clients/supabase'
 import { useOrdersStore } from '../stores/orders.js'
 let ordersStore = useOrdersStore()
