@@ -9,7 +9,8 @@
     <div class="items">
       <!-- display each unique item, with its amount and name -->
       <div class="item" v-for="item in getUniqueItems()" :key="item.id">
-        {{ itemQuantity(item) }} {{ item.name }} <button @click="increment(item)">+</button>
+        <li>{{ itemQuantity(item) }} {{ item.name }}</li> 
+        <button @click="increment(item)">+</button>
         <button @click="decrement(item)">-</button>
       </div>
     </div>
@@ -24,11 +25,8 @@
       <!-- if logged in: on click, send cart to supabase and to store, make sure orders can be seen, and go to orders page -->
       Checkout
       </router-link>
+      <router-link v-if=" !logged " to="/LogIn" class="login">Login to Checkout</router-link>
       <button class="clearCart" @click="store.$reset">Clear Cart</button>
-    </div>
-    <div class="login">
-      <!-- this referral to login will only show if the logged state is false (user is not logged in) -->
-      <router-link v-if="!logged" to="/LogIn">Login to Checkout</router-link>
     </div>
   </div>
 </template>
@@ -107,14 +105,28 @@ async function sendCart() {
 h2,
 p,
 li,
-a {
+a,
+.item {
   font-family: 'Open Sans', sans-serif;
   margin: 5px 0;
 }
 
 .item {
   display: flex;
-  margin-bottom: 10px;
+  margin: 5px;
+}
+
+.item li {
+  margin-right: 15px;
+  font-size: 20px;
+}
+.item button {
+  background-color: #fbba7d;
+  border: 3px solid #d6985e;
+  margin: 0 3px;
+  width: 30px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .checkout {
@@ -136,10 +148,6 @@ a {
   justify-content: center;
 }
 
-.login {
-  margin-top: 1rem;
-  text-align: center;
-}
 
 .main {
   width: 20rem;
@@ -155,7 +163,7 @@ a {
   overflow: auto;
 }
 
-.clearCart {
+.clearCart, .login {
   margin-top: 0.4rem;
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
@@ -170,6 +178,7 @@ a {
   text-decoration: none;
   cursor: pointer;
 }
+
 
 .buttons {
   display: flex;
