@@ -20,8 +20,6 @@ import { useOrdersStore } from '../stores/orders.js'
 let ordersStore = useOrdersStore()
 let carts = ref([])
 
-carts.value = ordersStore.carts
-
 // function to get user's uuid and get every cart that they have ordered
 
 function cartInterpreter(cart) {
@@ -51,7 +49,7 @@ async function pay(order_id) {
 
 // when orders view is mounted, get carts
 onMounted(async () => {
-  
+  carts.value = ordersStore.carts
 })
 </script>
 
