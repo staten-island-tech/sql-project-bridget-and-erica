@@ -9,7 +9,7 @@
       <p class="message">{{ message }}</p>
       <div class="buttons">
         <!-- when logging in, show orders link -->
-        <button @click="login(); ordersStore.toggleOrders(); ordersStore.getCarts()">Login</button>
+        <button @click="loginAndCheck()">Login</button>
       </div>
       <div class="createAccount">
         <p>Don't have an account yet? Create one</p>
@@ -60,6 +60,12 @@ async function login() {
     message.value = 'Error logging in.'
     console.log(err)
   }
+}
+
+async function loginAndCheck() {
+  await login();
+  await ordersStore.getCarts()
+  ordersStore.toggleOrders();
 }
 </script>
 
