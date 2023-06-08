@@ -7,7 +7,7 @@
         <p>ID: {{ order.order_id }}</p>
         <!-- create a p tag for every item in its respective cart (will display quantity and name) -->
         <div class="items">
-          <li v-for="item in cartInterpreter(order.cart)">{{ item }}</li>
+          <li v-for="item in cartInterpreter(order.cart)" :key="item.id">{{ item }}</li>
         </div>
       </div>
       <div class="processed">
@@ -52,6 +52,7 @@ async function pay(order_id) {
     .from('orders')
     .update({ processed: true })
     .eq('order_id', order_id)
+    console.log(data)
 }
 
 // when orders view is mounted, get carts

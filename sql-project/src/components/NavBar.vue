@@ -1,16 +1,16 @@
 <template>
   <nav>
     <div class="left">
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/LogIn">Login</RouterLink>
+      <RouterLink to="/" class="link">Home</RouterLink>
+      <RouterLink v-if="!loggedStore.logged" to="/LogIn" class="link">Login</RouterLink>
 
       <!-- display if showOrders is true (when logged in/checked out and orders.length > 0) -->
-      <RouterLink to="/Orders" v-if="ordersStore.showOrders">Orders</RouterLink>
+      <RouterLink to="/Orders" v-if="ordersStore.showOrders" class="link">Orders</RouterLink>
     </div>
     <div class="right">
       <div class="logOut">
         <!-- this referral to login will only show if the logged state is false (user is not logged in); on click, log out and reset user's carts and go back to home -->
-        <button v-if="loggedStore.logged" @click="loggedStore.logOut(); ordersStore.reset(); ordersStore.toggleOrders()" to="/">Sign Out</button>
+        <router-link v-if="loggedStore.logged" @click="logOut()" to="/" class="signOut">Sign Out</router-link>
       </div>
       <div class="toggleCart">
         <img src="/shopping-cart.svg" width="25" height="25" @click="toggleCart()" />
@@ -93,7 +93,7 @@ nav a:hover {
   transition: all 1s ease;
 }
 
-button {
+.signOut {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -101,10 +101,12 @@ button {
   text-align: center;
   background: #fbba7d;
   border-radius: 81px;
-  width: 5rem;
+  width: 7rem;
   border: none;
   padding: 0.5rem;
+  margin: 0;
   margin-right: 1rem;
+  color: black;
 
   cursor: pointer;
 }

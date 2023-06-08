@@ -18,12 +18,11 @@ async function checkSession() {
   if (data.session == null) {
     useLoggedStore().logged = false
   }
-  console.log(data)
+  console.log(error)
 }
 
 onMounted(async () => {
   await checkSession()
-  await useOrdersStore().getCarts()
   useOrdersStore().toggleOrders()
   if (useLoggedStore().logged == true) {
     useOrdersStore().getCarts()

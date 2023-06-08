@@ -9,6 +9,7 @@ export const useLoggedStore = defineStore('logged', {
     async logOut() {
       this.logged = false //logout function sets the 'logged' state to false, effectively logging the user out
       const { error } = await supabase.auth.signOut()
+      console.log(error)
     }
   },
   persist: true //logged/logged-out state persists despite page refresh

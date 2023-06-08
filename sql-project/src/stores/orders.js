@@ -33,7 +33,7 @@ export const useOrdersStore = defineStore('orders', () => {
   
     // get all orders that have user id equal to previous user auth id
     let { data: orders, error } = await supabase.from('orders').select('*').eq('user_id', uuid)
-  
+    console.log(error)
     carts.value = orders
   }
 

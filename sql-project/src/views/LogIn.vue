@@ -21,17 +21,16 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
+import { useRouter } from 'vue-router';
 import { ref } from 'vue'
 import { supabase } from '../clients/supabase'
 
 import { useLoggedStore } from '../stores/logged'
-import { storeToRefs } from 'pinia'
-
 import { useOrdersStore } from '../stores/orders'
 
 const ordersStore = useOrdersStore()
 const loggedStore = useLoggedStore()
-const { logged } = storeToRefs(loggedStore)
+const router = useRouter();
 
 let email = ref('')
 let password = ref('')
@@ -47,7 +46,7 @@ async function login() {
       password: password.value
     })
     if (error) {
-      console.error(error)
+      console.error(user, error)
       message.value = 'Error logging in.'
     } else {
       message.value = 'Login successful!'
@@ -55,6 +54,7 @@ async function login() {
       password.value = ''
 
       loggedStore.logged = true
+      router.push('/');
     }
   } catch (err) {
     message.value = 'Error logging in.'
@@ -104,8 +104,8 @@ button {
   transition: all 0.2s;
   padding: 8px 20px;
   border-radius: 100px;
-  background: var(--yellow);
-  border: 1px solid transparent;
+  background: #fbba7d;
+  border: 1px solid black;
   display: flex;
   align-items: center;
   font-size: 16px;
