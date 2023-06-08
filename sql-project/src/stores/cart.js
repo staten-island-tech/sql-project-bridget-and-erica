@@ -1,16 +1,52 @@
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { defineStore } from 'pinia'
+import { supabase } from '../clients/supabase'
 
-export const useCartStore = defineStore('cart', () => {
-  // reactive array for cart
-  const cart = ref([])
+export const useCartStore = defineStore(
+  'cart',
+  () => {
+    // reactive array for cart
+    const user = ref(null)
+    const loggedIn = ref(false)
+    const cart = ref([])
+    const showOrders = ref(false)
 
-  // reset function
-  function $reset() {
-    cart.value = []
-  }
+    // reset function
+    function $reset() {
+      cart.value = []
+    }
 
-  return { cart, $reset }
-},
-{persist: true}
+    // function to check if user has orders
+    function toggleOrders() {
+      if (cart.value.length > 0) {
+        showOrders.value = true
+      } else {
+        showOrders.value = false
+      }
+      console.log('orders value:', showOrders.value)
+    }
+
+    onMounted(async () => {
+      supabase.auth.onAuthStateChange(async (event, session) => {
+        console.log(event, session)
+        user.value = session ? session.user : null
+
+        if (user.value) {
+          //check if there are existing orders for the user
+          const { data: orders, error } = await supabase
+            .from('orders')
+            .select('cart')
+            .eq('user_id', user.value.id)
+
+          if (error) {
+            console.error('Error fetching existing orders:', error)
+            return
+          }
+        }
+      })
+    })
+
+    return { user, loggedIn, cart, showOrders, toggleOrders, $reset }
+  },
+  { persist: true }
 )

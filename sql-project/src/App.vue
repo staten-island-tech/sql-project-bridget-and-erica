@@ -10,7 +10,6 @@ import { supabase } from './clients/supabase';
 import { onMounted } from 'vue';
 
 import { useLoggedStore } from './stores/logged';
-import { useOrdersStore } from './stores/orders';
 
 // function that checks the auth session, if null session, logged false in the store
 async function checkSession() {
@@ -23,10 +22,6 @@ async function checkSession() {
 
 onMounted(() => {
   checkSession()
-  useOrdersStore().toggleOrders()
-  if (useLoggedStore().logged == true) {
-    useOrdersStore().getCarts()
-  }
 })
 
 </script>

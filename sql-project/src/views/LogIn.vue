@@ -9,7 +9,7 @@
       <p class="message">{{ message }}</p>
       <div class="buttons">
         <!-- when logging in, show orders link -->
-        <button @click="login(); ordersStore.toggleOrders(); ordersStore.getCarts()">Login</button>
+        <button @click="login()">Login</button>
       </div>
       <div class="createAccount">
         <p>Don't have an account yet? Create one</p>
@@ -25,15 +25,10 @@ import { ref } from 'vue'
 import { supabase } from '../clients/supabase'
 
 import { useLoggedStore } from '../stores/logged'
-import { storeToRefs } from 'pinia'
+import { useCartStore } from '../stores/cart';
+const cartStore = useCartStore()
 
-import { useOrdersStore } from '../stores/orders'
-import { useAuthStore } from '../stores/authStore'
-
-const ordersStore = useOrdersStore()
 const loggedStore = useLoggedStore()
-const authStore = useAuthStore()
-const { logged } = storeToRefs(loggedStore)
 
 let email = ref('')
 let password = ref('')

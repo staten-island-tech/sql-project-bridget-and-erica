@@ -39,13 +39,10 @@ import { supabase } from '../clients/supabase'
 import { useCartStore } from '../stores/cart'
 import { useLoggedStore } from '../stores/logged'
 import { storeToRefs } from 'pinia'
-import { useOrdersStore } from '../stores/orders'
 
 const loggedStore = useLoggedStore()
 const { logged } = storeToRefs(loggedStore)
 const store = useCartStore()
-const ordersStore = useOrdersStore()
-
 
 // function that takes each item in the cart and adds the prices, only to 2 decimals
 function totalPrice() {
