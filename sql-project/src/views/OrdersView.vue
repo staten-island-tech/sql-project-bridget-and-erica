@@ -1,7 +1,7 @@
 <template>
   <div class="orders">
     <!-- create a div for every order in user's carts -->
-    <div class="order" v-for="order in carts" :key="order.id">
+    <div class="order notPurchased" v-for="order in carts" :key="order.id">
       <div class="cart">
         <!-- show unique order_id -->
         <p>ID: {{ order.order_id }}</p>
@@ -26,6 +26,7 @@ import { useOrdersStore } from '../stores/orders.js'
 
 let ordersStore = useOrdersStore()
 let carts = ref([])
+let purchased = ref([])
 
 // function to get user's uuid and get every cart that they have ordered
 
@@ -52,12 +53,20 @@ async function pay(order_id) {
     .from('orders')
     .update({ processed: true })
     .eq('order_id', order_id)
-    console.log(data)
+  
+  console.log(order_id, data)
+}
+
+async function getPurchased() {
+  let { data: orders, error } = await supabase.from('orders').select('*').eq('processed', true)
+  purchased.value.push(orders)
+  console.log(purchased.value)
 }
 
 // when orders view is mounted, get carts
 onMounted(async () => {
   carts.value = ordersStore.carts
+  getPurchased()
 })
 </script>
 
@@ -67,6 +76,7 @@ onMounted(async () => {
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
 .order {
   border: 1px black solid;
   padding: 1rem;
@@ -93,9 +103,10 @@ li {
   flex-direction: column;
   margin-bottom: 10px;
   height: 80%;
-  
+
 }
 
 .processed {
   text-align: center;
-}</style>
+}
+</style>

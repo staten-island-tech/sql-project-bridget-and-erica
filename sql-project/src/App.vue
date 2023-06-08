@@ -18,7 +18,9 @@ async function checkSession() {
   if (data.session == null) {
     useLoggedStore().logged = false
   }
-  console.log(error)
+  if (error !== null) {
+    console.log(error)
+  }
 }
 
 onMounted(async () => {
