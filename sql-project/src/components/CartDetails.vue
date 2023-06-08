@@ -12,8 +12,18 @@
       <li v-for="item in getUniqueItems()" :key="item.id">{{ itemQuantity(item) }} {{ item.name }} </li>
     </div>
     <div class="buttons">
-      <RouterLink to="/CheckoutView">Checkout</RouterLink>
-      <button @click="store.$reset">Clear Cart</button>
+      <!-- user will only be able to checkout if they are logged in -->
+      <router-link
+        class="checkout"
+        v-if="logged"
+        to="/Orders"
+        @click="sendAndCheck()"
+      >
+      <!-- if logged in: on click, send cart to supabase and to store, make sure orders can be seen, and go to orders page -->
+      Checkout
+      </router-link>
+      <router-link v-if=" !logged " to="/LogIn" class="login">Login to Checkout</router-link>
+      <button class="clearCart" @click="store.$reset">Clear Cart</button>
     </div>
 
   </div>
@@ -55,6 +65,26 @@ function getUniqueItems() {
   })
 
   return uniqueItems
+}
+
+async function sendCart() {
+  const {
+    data: { user }
+  } = await supabase.auth.getUser()
+  const uuid = user.id
+  if (store.cart.length != 0) {
+    const { error } = await supabase
+      .from('orders')
+      .insert([{ user_id: uuid, cart: store.cart, order_total: totalPrice() }])
+    console.log(error)
+  } else {
+    alert('Nothing in cart')
+  }
+}
+
+async function sendAndCheck() {
+  await sendCart();
+  ordersStore.toggleOrders()
 }
 </script>
 
