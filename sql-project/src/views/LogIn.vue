@@ -8,7 +8,8 @@
       </div>
       <p class="message">{{ message }}</p>
       <div class="buttons">
-        <button @click="login">Login</button>
+        <!-- when logging in, show orders link -->
+        <button @click="loginAndCheck()">Login</button>
       </div>
       <div class="createAccount">
         <p>Don't have an account yet? Create one</p>
@@ -17,17 +18,20 @@
     </div>
   </div>
 </template>
-  
+
 <script setup>
-import { RouterLink } from "vue-router";
-import { ref } from "vue";
-import { supabase } from "../clients/supabase";
+import { RouterLink } from 'vue-router'
+import { ref } from 'vue'
+import { supabase } from '../clients/supabase'
 
 import { useLoggedStore } from '../stores/logged'
 import { storeToRefs } from 'pinia'
 
+import { useOrdersStore } from '../stores/orders'
+
+const ordersStore = useOrdersStore()
 const loggedStore = useLoggedStore()
-const {logged} = storeToRefs(loggedStore)
+const { logged } = storeToRefs(loggedStore)
 
 let email = ref('')
 let password = ref('')
@@ -46,7 +50,6 @@ async function login() {
       console.error(error)
       message.value = 'Error logging in.'
     } else {
-      console.log(user)
       message.value = 'Login successful!'
       email.value = ''
       password.value = ''
@@ -58,8 +61,14 @@ async function login() {
     console.log(err)
   }
 }
+
+async function loginAndCheck() {
+  await login();
+  await ordersStore.getCarts()
+  ordersStore.toggleOrders();
+}
 </script>
-  
+
 <style scoped>
 .container {
   display: flex;

@@ -66,7 +66,6 @@ onMounted(async () => {
   flex-wrap: wrap;
   justify-content: space-around;
 }
-
 .order {
   border: 1px black solid;
   padding: 1rem;

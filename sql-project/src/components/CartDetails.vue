@@ -3,13 +3,16 @@
     <h2>Your Cart</h2>
     <hr />
     <div class="total">
-      <hr />
       <!-- display calculated total price -->
       <p>Total: ${{ totalPrice() }}</p>
     </div>
     <div class="items">
       <!-- display each unique item, with its amount and name -->
-      <li v-for="item in getUniqueItems()" :key="item.id">{{ itemQuantity(item) }} {{ item.name }} </li>
+      <div class="item" v-for="item in getUniqueItems()" :key="item.id">
+        <li>{{ itemQuantity(item) }} {{ item.name }}</li> 
+        <button @click="increment(item)">+</button>
+        <button @click="decrement(item)">-</button>
+      </div>
     </div>
     <div class="buttons">
       <!-- user will only be able to checkout if they are logged in -->
@@ -25,19 +28,21 @@
       <router-link v-if=" !logged " to="/LogIn" class="login">Login to Checkout</router-link>
       <button class="clearCart" @click="store.$reset">Clear Cart</button>
     </div>
-
   </div>
 </template>
 
 <script setup>
 // import stores
+import { supabase } from '../clients/supabase'
 import { useCartStore } from '../stores/cart'
 import { useLoggedStore } from '../stores/logged'
 import { storeToRefs } from 'pinia'
+import { useOrdersStore } from '../stores/orders'
 
 const loggedStore = useLoggedStore()
 const { logged } = storeToRefs(loggedStore)
 const store = useCartStore()
+const ordersStore = useOrdersStore()
 
 // function that takes each item in the cart and adds the prices, only to 2 decimals
 function totalPrice() {
@@ -50,6 +55,19 @@ function totalPrice() {
 function itemQuantity(item) {
   let quantity = store.cart.filter((cartItem) => cartItem.id == item.id).length
   return quantity
+}
+
+// adds the item to the cart again
+function increment(item) {
+  store.cart.push(item)
+}
+
+// finds if the item is in the cart, if it is, get rid of it
+function decrement(item) {
+  const index = store.cart.findIndex((cartItem) => cartItem.id === item.id)
+  if (index !== -1) {
+    store.cart.splice(index, 1)
+  }
 }
 
 // function that checks when you add an item, if it's id is unique; if not, add the id and name to their arrays; returns unique items (so that cart wont display every item in cart)
@@ -92,10 +110,49 @@ async function sendAndCheck() {
 h2,
 p,
 li,
-a {
+a,
+.item {
   font-family: 'Open Sans', sans-serif;
   margin: 5px 0;
 }
+
+.item {
+  display: flex;
+  margin: 5px;
+}
+
+.item li {
+  margin-right: 15px;
+  font-size: 20px;
+}
+.item button {
+  background-color: #fbba7d;
+  border: 3px solid #d6985e;
+  margin: 0 3px;
+  width: 30px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.checkout {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  text-align: center;
+  background: #fbba7d;
+  border-radius: 81px;
+  width: 7rem;
+  height: 2.3125rem;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .main {
   width: 20rem;
@@ -111,7 +168,8 @@ a {
   overflow: auto;
 }
 
-button {
+.clearCart, .login {
+  margin-top: 0.4rem;
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -125,6 +183,7 @@ button {
   text-decoration: none;
   cursor: pointer;
 }
+
 
 .buttons {
   display: flex;
