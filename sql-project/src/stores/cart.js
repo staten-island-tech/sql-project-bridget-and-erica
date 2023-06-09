@@ -14,7 +14,7 @@ export const useCartStore = defineStore(
 
     // reset function
     function $reset() {
-      userOrders.value = []
+      cart.value = []
     }
 
     // function to check if user has orders
@@ -29,16 +29,25 @@ export const useCartStore = defineStore(
     onMounted(async () => {
       supabase.auth.onAuthStateChange(async (event, session) => {
         user.value = session ? session.user : null
-
+    
         if (user.value) {
-          //check if there are existing orders for the user
-          const { data: orders, error } = await supabase
-            .from('orders')
-            .select()
-            .eq('user_id', user.value.id)
-          userOrders.value = orders
-          toggleOrders()
-          if (error) {
+          try {
+            // check if there are existing orders for the user
+            const { data: orders, error: fetchError } = await supabase
+              .from('orders')
+              .select()
+              .eq('user_id', user.value.id)
+    
+     
+            // Add the items from existing orders to the cart
+            const existingCartItems = orders.flatMap((order) => order.cart)
+            console.log(existingCartItems)
+            cart.value = cart.value.concat(existingCartItems)
+            toggleOrders()
+        
+            alert("Items from your previous order have been added to this order")
+            console.log(cart)
+          } catch (error) {
             console.error('Error fetching existing orders:', error)
           }
         }
