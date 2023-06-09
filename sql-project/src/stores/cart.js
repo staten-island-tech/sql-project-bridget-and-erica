@@ -10,6 +10,7 @@ export const useCartStore = defineStore(
     const loggedIn = ref(false)
     const cart = ref([])
     const showOrders = ref(false)
+    const userOrders = ref([])
 
     // reset function
     function $reset() {
@@ -23,30 +24,28 @@ export const useCartStore = defineStore(
       } else {
         showOrders.value = false
       }
-      console.log('orders value:', showOrders.value)
     }
 
     onMounted(async () => {
       supabase.auth.onAuthStateChange(async (event, session) => {
-        console.log(event, session)
         user.value = session ? session.user : null
 
         if (user.value) {
           //check if there are existing orders for the user
           const { data: orders, error } = await supabase
             .from('orders')
-            .select('cart')
+            .select()
             .eq('user_id', user.value.id)
 
           if (error) {
             console.error('Error fetching existing orders:', error)
-            return
           }
+          userOrders.value = orders
         }
       })
     })
 
-    return { user, loggedIn, cart, showOrders, toggleOrders, $reset }
+    return { user, loggedIn, cart, showOrders, userOrders, toggleOrders, $reset }
   },
   { persist: true }
 )

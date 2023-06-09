@@ -37,7 +37,6 @@ async function filter(selection) {
     )
     productsStore.filtered = filteredProducts
   }
-  console.log(productsStore.filtered)
 }
 
 function sort(selection) {

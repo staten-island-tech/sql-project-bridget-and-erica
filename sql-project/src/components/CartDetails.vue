@@ -100,7 +100,7 @@ async function sendCart() {
 
 async function sendAndCheck() {
   await sendCart();
-  ordersStore.toggleOrders()
+  store.toggleOrders()
 }
 </script>
 

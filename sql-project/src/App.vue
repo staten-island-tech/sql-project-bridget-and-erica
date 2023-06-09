@@ -27,9 +27,6 @@ async function checkSession() {
 onMounted(async () => {
   await checkSession()
   cartStore.toggleOrders()
-  if (useLoggedStore().logged == true) {
-    cartStore.getCarts()
-  }
 })
 
 </script>
