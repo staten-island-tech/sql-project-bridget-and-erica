@@ -62,7 +62,6 @@ async function login() {
 
 async function loginAndCheck() {
   await login();
-  await cartStore.getCarts()
   cartStore.toggleOrders();
 }
 </script>

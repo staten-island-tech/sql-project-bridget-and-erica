@@ -14,12 +14,12 @@ export const useCartStore = defineStore(
 
     // reset function
     function $reset() {
-      cart.value = []
+      userOrders.value = []
     }
 
     // function to check if user has orders
     function toggleOrders() {
-      if (cart.value.length > 0) {
+      if (userOrders.value.length > 0) {
         showOrders.value = true
       } else {
         showOrders.value = false
@@ -36,12 +36,13 @@ export const useCartStore = defineStore(
             .from('orders')
             .select()
             .eq('user_id', user.value.id)
-
+          userOrders.value = orders
+          toggleOrders()
           if (error) {
             console.error('Error fetching existing orders:', error)
           }
-          userOrders.value = orders
         }
+        console.log("auth state changed", event, session)
       })
     })
 

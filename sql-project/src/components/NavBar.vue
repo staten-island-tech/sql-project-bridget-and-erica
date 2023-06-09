@@ -39,7 +39,7 @@ function toggleCart() {
 
 async function logOut() {
   await loggedStore.logOut();
-  cartStore.reset();
+  cartStore.$reset();
   cartStore.toggleOrders()
 }
 </script>
