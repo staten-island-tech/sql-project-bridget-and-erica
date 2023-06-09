@@ -42,7 +42,6 @@ export const useCartStore = defineStore(
             console.error('Error fetching existing orders:', error)
           }
         }
-        console.log("auth state changed", event, session)
       })
     })
 

@@ -42,7 +42,7 @@ const productsStore = useProductStore()
 async function getProducts() {
   const { data } = await supabase.from('products').select() //API call to the 'products' table on Supabase
   productsStore.product = data
-  getCategories() //pull the categories so the product card shows the proper cateogory
+  await getCategories() //pull the categories so the product card shows the proper cateogory
   productsStore.filtered = productsStore.product //the filtered products are simply all the data/products, since no sorting or filtering is required upon loading
 }
 
